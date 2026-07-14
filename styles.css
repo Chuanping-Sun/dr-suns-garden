@@ -1,10 +1,10 @@
 /* Dr. Sun's Garden — Full Bleed Nature */
 
 :root {
-  --ink: #1c1c18;
-  --paper: #ffffff;
-  --paper-dim: #f6f5f1;
-  --line: rgba(28, 28, 24, 0.12);
+  --ink: #eef1ec;
+  --paper: #24341f;
+  --paper-dim: #1a2717;
+  --line: rgba(238, 241, 236, 0.14);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,7 +15,11 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 300;
   color: var(--ink);
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(100deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 2px, rgba(0,0,0,0.09) 2px, rgba(0,0,0,0.09) 4px),
+    linear-gradient(135deg, #2a3d25 0%, #1c2a1a 28%, #263822 52%, #182415 76%, #253721 100%);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -172,7 +176,7 @@ nav {
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(28,28,24,0.55);
+  color: rgba(238,241,236,0.55);
 }
 
 /* Section labels */
@@ -186,7 +190,7 @@ nav {
   font-size: 12px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(28,28,24,0.5);
+  color: rgba(238,241,236,0.5);
   margin-bottom: 14px;
 }
 
@@ -246,6 +250,7 @@ nav {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
+  border-radius: 28px;
 }
 
 .strip .frame img {
@@ -282,7 +287,7 @@ nav {
 .video-wrap video {
   width: 100%;
   display: block;
-  border-radius: 2px;
+  border-radius: 28px;
 }
 
 .film-note {
@@ -302,7 +307,7 @@ nav {
   font-size: 15px;
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(28,28,24,0.65);
+  color: rgba(238,241,236,0.7);
 }
 
 /* Gallery */
@@ -324,6 +329,7 @@ nav {
   overflow: hidden;
   aspect-ratio: 1 / 1;
   cursor: pointer;
+  border-radius: 28px;
 }
 
 .gallery-grid .frame img {
@@ -362,7 +368,7 @@ footer .foot-mark span {
 
 footer .updated {
   font-size: 12px;
-  color: rgba(28,28,24,0.5);
+  color: rgba(238,241,236,0.5);
   letter-spacing: 0.04em;
 }
 
