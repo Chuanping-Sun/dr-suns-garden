@@ -225,44 +225,32 @@
   </div>
 </section>
 
-<section>
-  <div class="section-label">
-    <p class="eyebrow-dark">Living in it</p>
-    <h2>A place to sit and stay</h2>
-  </div>
-
-  <div class="strip">
-    <div class="frame"><img src="assets/images/lifestyle-1.jpg" alt="Relaxing on the garden sofa beside the flower border"></div>
-    <div class="frame"><img src="assets/images/lifestyle-2.jpg" alt="Afternoon on the terrace with the dog"></div>
-    <div class="frame"><img src="assets/images/lifestyle-3.jpg" alt="Lawn and border seen from the seating area"></div>
-  </div>
-
-  <div class="full-bleed">
-    <div class="zoom-frame">
-      <img src="assets/images/interior-1.jpg" alt="Looking out from the garden room to the lawn beyond">
-    </div>
-    <p class="caption">The garden room, looking out</p>
-  </div>
-</section>
-
 <section id="gallery" class="gallery-section">
   <div class="section-label">
-    <p class="eyebrow-dark">Gallery</p>
+    <p class="eyebrow-dark">Gallery &middot; Living in it</p>
     <h2>Details, up close</h2>
   </div>
   <div class="gallery-grid">
     <div class="frame"><img src="assets/images/hero.jpg" alt="Wide terrace view"></div>
+    <div class="frame"><img src="assets/images/gallery-4.jpg" alt="Foxglove spike backlit at dusk"></div>
     <div class="frame"><img src="assets/images/structure-1.jpg" alt="Hydrangea and buddleia over the raised bed"></div>
-    <div class="frame"><img src="assets/images/structure-2.jpg" alt="Alstroemeria on the terrace"></div>
-    <div class="frame"><img src="assets/images/structure-4.jpg" alt="Gravel path, evening"></div>
     <div class="frame"><img src="assets/images/terrace-2.jpg" alt="Terrace with dahlias"></div>
-    <div class="frame"><img src="assets/images/terrace-3.jpg" alt="Terrace and trellis"></div>
-    <div class="frame"><img src="assets/images/lifestyle-1.jpg" alt="Garden sofa and border"></div>
+    <div class="frame"><img src="assets/images/gallery-1.jpg" alt="White daisies backlit beside the gravel path"></div>
+    <div class="frame"><img src="assets/images/lifestyle-3.jpg" alt="The dog on the paved path among the hydrangeas"></div>
     <div class="frame"><img src="assets/images/detail-1.jpg" alt="Rose in evening light"></div>
+    <div class="frame"><img src="assets/images/gallery-6.jpg" alt="The lawn path curving past the beds"></div>
+    <div class="frame"><img src="assets/images/structure-2.jpg" alt="Alstroemeria on the terrace"></div>
+    <div class="frame"><img src="assets/images/gallery-2.jpg" alt="Marigolds glowing in the evening border"></div>
+    <div class="frame"><img src="assets/images/terrace-4.jpg" alt="Garden shed and pergola in evening light"></div>
+    <div class="frame"><img src="assets/images/gallery-3.jpg" alt="Campanula and a white rose in the border"></div>
+    <div class="frame"><img src="assets/images/lifestyle-1.jpg" alt="Garden sofa and border"></div>
     <div class="frame"><img src="assets/images/detail-2.jpg" alt="Pink English roses"></div>
+    <div class="frame"><img src="assets/images/terrace-3.jpg" alt="Terrace and trellis"></div>
+    <div class="frame"><img src="assets/images/gallery-7.jpg" alt="A pair of soft pink English roses"></div>
+    <div class="frame"><img src="assets/images/structure-4.jpg" alt="Gravel path, evening"></div>
+    <div class="frame"><img src="assets/images/gallery-5.jpg" alt="Deep pink rose in evening light"></div>
     <div class="frame"><img src="assets/images/interior-1.jpg" alt="Garden room interior"></div>
     <div class="frame"><img src="assets/images/lifestyle-2.jpg" alt="Afternoon on the terrace"></div>
-    <div class="frame"><img src="assets/images/terrace-4.jpg" alt="Garden shed and pergola in evening light"></div>
   </div>
 </section>
 
@@ -282,6 +270,11 @@
   </a>
   <p class="updated">Photographed in Mottingham, London</p>
 </footer>
+
+<div class="video-lightbox" id="video-lightbox" aria-hidden="true">
+  <button type="button" class="video-lightbox-close" aria-label="Close and pause video">&times;</button>
+  <div class="video-lightbox-inner"></div>
+</div>
 
 <script>
 (function () {
@@ -310,6 +303,54 @@
       var anyPlaying = Array.prototype.some.call(videos, function (o) { return !o.paused; });
       if (!anyPlaying) scroller.classList.remove('is-playing');
     });
+  });
+
+  // Lightbox: whichever clip is playing enlarges to fill most of the
+  // screen; it drops back into the carousel the moment it's paused.
+  var lightbox = document.getElementById('video-lightbox');
+  var lightboxInner = lightbox.querySelector('.video-lightbox-inner');
+  var homes = new Map();
+  videos.forEach(function (v) {
+    homes.set(v, { parent: v.parentNode, next: v.nextSibling });
+  });
+
+  var activeVideo = null;
+
+  function openLightbox(video) {
+    if (activeVideo === video) return;
+    activeVideo = video;
+    lightboxInner.appendChild(video);
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('lightbox-open');
+  }
+
+  function closeLightbox(video) {
+    if (activeVideo !== video) return;
+    var home = homes.get(video);
+    if (home) {
+      home.parent.insertBefore(video, home.next);
+    }
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('lightbox-open');
+    activeVideo = null;
+  }
+
+  videos.forEach(function (v) {
+    v.addEventListener('play', function () { openLightbox(v); });
+    v.addEventListener('pause', function () { closeLightbox(v); });
+    v.addEventListener('ended', function () { closeLightbox(v); });
+  });
+
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox && activeVideo) activeVideo.pause();
+  });
+  lightbox.querySelector('.video-lightbox-close').addEventListener('click', function () {
+    if (activeVideo) activeVideo.pause();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && activeVideo) activeVideo.pause();
   });
 })();
 </script>
